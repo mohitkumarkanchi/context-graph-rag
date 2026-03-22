@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Graph RAG Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ─── Header ─────────────────────────────────── -->
+
+    <header class="header">
+        <h1>Context Graph RAG</h1>
+        <p class="subtitle">Basic Graph RAG vs Context Graph RAG — Manufacturing RCA Demo</p>
+        <div class="header-status">
+            <span id="status-dot" class="dot dot-connecting"></span>
+            <span id="status-text">Connecting...</span>
+        </div>
+    </header>
+
+    <!-- ─── Tabs ───────────────────────────────────── -->
+
+    <nav class="tabs">
+        <button class="tab active" data-tab="chat">Chat</button>
+        <button class="tab" data-tab="scenario">Scenario</button>
+        <button class="tab" data-tab="graph">Graph</button>
+    </nav>
+
+    <!-- ─── Tab: Chat ──────────────────────────────── -->
+
+    <section id="tab-chat" class="tab-content active">
+        <div class="chat-container">
+
+            <!-- Left: Basic RAG -->
+            <div class="chat-pane">
+                <div class="pane-header">
+                    <h2>Basic Graph RAG</h2>
+                    <span class="badge badge-basic">Stateless</span>
+                </div>
+                <div id="chat-basic" class="chat-messages"></div>
+            </div>
+
+            <!-- Right: Context RAG -->
+            <div class="chat-pane">
+                <div class="pane-header">
+                    <h2>Context Graph RAG</h2>
+                    <span class="badge badge-context">Stateful</span>
+                </div>
+                <div id="chat-context" class="chat-messages"></div>
+            </div>
+        </div>
+
+        <!-- Shared input -->
+        <div class="chat-input-bar">
+            <input
+                type="text"
+                id="chat-input"
+                placeholder="Ask a question (sent to both pipelines)..."
+                autocomplete="off"
+            >
+            <button id="btn-send" title="Send">Send</button>
+            <button id="btn-reset" class="btn-secondary" title="Reset session">Reset</button>
+        </div>
+
+        <!-- Context info bar -->
+        <div id="context-info" class="context-info hidden">
+            <span id="context-turn">Turn: 0</span>
+            <span id="context-entities">Entities: 0</span>
+            <span id="context-refs">Resolved refs: 0</span>
+            <span id="context-chain">RCA chain: 0</span>
+        </div>
+    </section>
+
+    <!-- ─── Tab: Scenario ──────────────────────────── -->
+
+    <section id="tab-scenario" class="tab-content">
+        <div class="scenario-header">
+            <div>
+                <h2>RCA Scenario: Bad Batch B-442</h2>
+                <p class="scenario-desc">
+                    Runs the 6-turn root cause analysis investigation through
+                    both pipelines. Watch how basic RAG loses context while
+                    context RAG traces the full causal chain.
+                </p>
+            </div>
+            <button id="btn-run-scenario" class="btn-primary">Run scenario</button>
+        </div>
+
+        <!-- Scenario results table -->
+        <div id="scenario-results" class="scenario-results">
+            <p class="scenario-placeholder">Click "Run scenario" to start the evaluation.</p>
+        </div>
+
+        <!-- Summary -->
+        <pre id="scenario-summary" class="scenario-summary hidden"></pre>
+    </section>
+
+    <!-- ─── Tab: Graph ─────────────────────────────── -->
+
+    <section id="tab-graph" class="tab-content">
+        <div class="graph-controls">
+            <div>
+                <h2>Knowledge &amp; Context Graph</h2>
+                <p class="graph-desc">
+                    Left: static knowledge graph. Right: session context graph
+                    (grows as you chat).
+                </p>
+            </div>
+            <div class="graph-buttons">
+                <button id="btn-load-kg" class="btn-secondary">Load knowledge graph</button>
+                <button id="btn-load-ctx" class="btn-secondary">Load context graph</button>
+            </div>
+        </div>
+        <div class="graph-container">
+            <div class="graph-pane">
+                <h3>Knowledge graph</h3>
+                <svg id="kg-svg"></svg>
+            </div>
+            <div class="graph-pane">
+                <h3>Context graph</h3>
+                <svg id="ctx-svg"></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Scripts ────────────────────────────────── -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script src="graph-viz.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
