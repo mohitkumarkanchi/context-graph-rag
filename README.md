@@ -3,7 +3,7 @@
 A side-by-side comparison of **basic Graph RAG** vs **Graph RAG with a context graph**, demonstrating how stateful context improves multi-turn conversations and root cause analysis in manufacturing.
 
 
-![Alt text](context-graph-rag/assets/display_image.png)
+![Alt text](./assets/display_image.png)
 
 
 
